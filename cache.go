@@ -13,7 +13,7 @@ type (
 		// This is set when the cache instance is started and should be saved to access the cache later.
 		CacheNum int
 
-		// Stores is used to access the currently active stores
+		// Stores is used to access the current caches active stores
 		Stores Stores
 
 		// TrimTime Defines the interval at which trim() calls the store specified Trim() method

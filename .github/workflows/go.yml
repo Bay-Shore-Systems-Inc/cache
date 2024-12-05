@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  last-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,7 +22,7 @@ jobs:
 
       - name: Test
         run: go test -v ./...
-  build:
+  current-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

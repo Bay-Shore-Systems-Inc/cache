@@ -1,8 +1,13 @@
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/bay-shore-systems-inc/cache)
+[![Go](https://github.com/Bay-Shore-Systems-Inc/cache/actions/workflows/go.yml/badge.svg)](https://github.com/Bay-Shore-Systems-Inc/cache/actions/workflows/go.yml)
 # Cache
 Cache is a simple dependency free cache package with the ability to add new storage methods be implementing a new store.
 
 This cache will run as many stores as needed and can run more than one instance at a time. You can access and maintine the stores individually per cache instance. 
 Each cache will run a trimming function which calls the trim method implemented by each store to remove old itmes. The cache will also shut down gracefully. You can shut down all cache instances or a single instance.
+
+This package supports last 2 stable go versions.
+
 - [Install](#install)
 - [Stores](#stores)
 - [Implementing](#implementing)

@@ -1,12 +1,12 @@
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/bay-shore-systems-inc/cache)
 [![Go](https://github.com/Bay-Shore-Systems-Inc/cache/actions/workflows/go.yml/badge.svg)](https://github.com/Bay-Shore-Systems-Inc/cache/actions/workflows/go.yml)
 # Cache
-Cache is a simple dependency free cache package with the ability to add new storage methods be implementing a new store.
+Cache is a simple dependency free cache package with the ability to add new storage methods by implementing a new store.
 
-This cache will run as many stores as needed and can run more than one instance at a time. You can access and maintine the stores individually per cache instance. 
-Each cache will run a trimming function which calls the trim method implemented by each store to remove old itmes. The cache will also shut down gracefully. You can shut down all cache instances or a single instance.
+This cache will run as many stores as needed and can run more than one instance at a time. You can access and maintain the stores individually per cache instance. 
+Each cache will run a trimming function which calls the trim method implemented by each store to remove old items. The cache will also shut down gracefully. You can shut down all cache instances or a single instance.
 
-This package supports last 2 stable go versions.
+This package supports the last 2 stable go versions.
 
 - [Install](#install)
 - [Stores](#stores)
@@ -27,7 +27,7 @@ $ go get github.com/bay-shore-systems-inc/cache
 ## Implementing
 Select and initiate each store you want to run in the cache.
 > [!NOTE]
-> The Options for each store will varry depending on the store.
+> The Options for each store will vary depending on the store.
 ```go
 import "github.com/bay-shore-systems-inc/stores/mem"
 
@@ -82,7 +82,7 @@ func main() {
 | Stores | nil | Used be the current cache to access the store or stores used to save items |
 
 ## Accessing Stores
-Once you have the cache started you can access the store. You will need to call the store to get the stores writer.
+Once you have the cache started you can access the store. You will need to call the store to get the store's writer.
 ```go
 func main() {
   ...
@@ -90,7 +90,7 @@ func main() {
   ...
 }
 ```
-Now you can access the stores writer methods.
+Now you can access the store's writer methods.
 ```go
 func main() {
   ...
@@ -133,7 +133,7 @@ func main() {
 ```
 
 ## Stopping
-When you want to stop the cache there are two ways do to this. You can either stop all instance or a single cache instance.
+When you want to stop the cache there are two ways to do this. You can either stop all instances or a single cache instance.
 
 To stop a single cache instance.
 ```go

@@ -95,7 +95,7 @@ func (w *writer) Read(key string) ([]byte, error) {
 func (w *writer) Remove(key string) error {
 	w.Store.data.Delete(key)
 	_, ok := w.Store.data.Load(key)
-	if !ok {
+	if ok {
 		return errors.New("key was not removed")
 	}
 	return nil

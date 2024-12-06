@@ -81,7 +81,12 @@ func TestMemStore(t *testing.T) {
 		wg.Add(1)
 		go func() {
 			oldVal := value[i]
-			m.Remove(key[i])
+			err := m.Remove(key[i])
+			if err != nil {
+				t.Fail()
+				t.Log(err)
+
+			}
 			v, err := m.Read(key[i])
 			if err != nil {
 				if oldVal == string(v) {

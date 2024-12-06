@@ -13,8 +13,7 @@ type (
 	// Store implements cache.Store
 	Store struct {
 		storeType string
-		mtx       sync.Mutex
-		data      memStoreMap
+		data      *sync.Map
 
 		// MaxAge is the implementation of cache.MaxAge for use during trimming old key-value pairs
 		MaxAge cache.MaxAge
@@ -31,9 +30,6 @@ type (
 		value     []byte
 		timeStamp time.Time
 	}
-
-	// memStoreMap type is used for the in-memory store data
-	memStoreMap map[string]valueStore
 )
 
 // New will initialize a new in-memory store
@@ -41,7 +37,7 @@ type (
 func New(s *Store) (*Store, error) {
 	// Set store type and make data map for writing
 	s.storeType = "mem"
-	s.data = make(memStoreMap)
+	s.data = new(sync.Map)
 
 	// Check if MaxAge is set.
 	// If not set to the default value.
@@ -66,38 +62,42 @@ func Get(s *Store) *writer {
 // Write adds a new key-value pair in memory
 // If overwrite = true data will be overwriten if it alreay exists
 func (w *writer) Write(key string, value []byte, overwrite bool) error {
-	w.Store.mtx.Lock()
-	defer w.Store.mtx.Unlock()
-	if _, ok := w.Store.data[key]; ok {
-		err := errors.New("key already exists in memory store")
-		return err
+	if !overwrite {
+		_, ok := w.Store.data.LoadOrStore(key, &valueStore{
+			value:     value,
+			timeStamp: time.Now(),
+		})
+		if ok {
+			err := errors.New("key already exists in memory store")
+			return err
+		}
+	} else {
+		w.Store.data.Store(key, &valueStore{
+			value:     value,
+			timeStamp: time.Now(),
+		})
 	}
-	save := valueStore{
-		value:     value,
-		timeStamp: time.Now(),
-	}
-	w.Store.data[key] = save
 	return nil
 }
 
 // Read gets key-value pair from the in memory store and return is as a byte slice
 func (w *writer) Read(key string) ([]byte, error) {
-	w.Store.mtx.Lock()
-	defer w.Store.mtx.Unlock()
-	if _, ok := w.Store.data[key]; !ok {
+	value, ok := w.Store.data.Load(key)
+	if !ok {
 		err := errors.New("key not found in memory store")
 		return []byte{}, err
 	}
-	value := w.Store.data[key]
-	return value.value, nil
+	return value.(*valueStore).value, nil
 }
 
 // Remove deletes a key-value pair from in memory store
 // Map delete() is no-op if map is nil or there is no matching key
 func (w *writer) Remove(key string) error {
-	w.Store.mtx.Lock()
-	defer w.Store.mtx.Unlock()
-	delete(w.Store.data, key)
+	w.Store.data.Delete(key)
+	_, ok := w.Store.data.Load(key)
+	if !ok {
+		return errors.New("key was not removed")
+	}
 	return nil
 }
 
@@ -106,15 +106,14 @@ func (w *writer) Remove(key string) error {
 // This can be called directly if needed.
 func (s *Store) Trim() {
 	log.Println("Starting file store trimming...")
-	s.mtx.Lock()
-	defer s.mtx.Unlock()
 
-	for key, stored := range s.data {
-		age := stored.timeStamp.Add(time.Second * time.Duration(s.MaxAge))
+	s.data.Range(func(key interface{}, stored interface{}) bool {
+		age := stored.(*valueStore).timeStamp.Add(time.Second * time.Duration(s.MaxAge))
 		if time.Now().Local().After(age) {
-			delete(s.data, key)
+			s.data.Delete(key)
 		}
-	}
+		return true
+	})
 
 	log.Println("File store trimming complete")
 }
@@ -126,11 +125,11 @@ func (s *Store) Trim() {
 // This will never return an error.
 func (s *Store) Purge() error {
 	log.Println("In-memory store is being purged...")
-	s.mtx.Lock()
-	defer s.mtx.Unlock()
 
-	newMap := make(memStoreMap)
-	s.data = newMap
+	s.data.Range(func(key interface{}, stored interface{}) bool {
+		s.data.Delete(key)
+		return true
+	})
 
 	log.Println("In-memory store purge complete")
 	return nil

@@ -3,6 +3,7 @@ package mem_test
 import (
 	"crypto/rand"
 	"encoding/base32"
+	"sync"
 	"testing"
 	"time"
 
@@ -44,25 +45,58 @@ func TestMemStore(t *testing.T) {
 	}
 
 	// Test adding key-values and reading them from memory store
+	//
+	// WARNING: When testing race conditions in multiple go routines
+	// you can't use the assert package or %v to format lines.
+	// the assert package uses %v and will cause a data race.
+	// See https://github.com/stretchr/testify/pull/1598
+	// %v causes race conditions because it uses the GoStringer interface
+	// which is not safe for concurrency
+	var wg sync.WaitGroup
 	for i := 0; i < len(key); i++ {
-		err = m.Write(key[i], []byte(value[i]), false)
-		a.NoError(err)
+		wg.Add(1)
+		go func() {
+			err = m.Write(key[i], []byte(value[i]), false)
+			if err != nil {
+				t.Fail()
+				t.Log(err)
+			}
 
-		v, err := m.Read(key[i])
-		if a.NoError(err) {
-			a.Equal(value[i], string(v))
-		}
+			v, err := m.Read(key[i])
+			if err != nil {
+				t.Fail()
+				t.Log(err)
+			} else {
+				if value[i] != string(v) {
+					t.Fail()
+					t.Logf("%s doesn't match %s", value[i], string(v))
+				}
+			}
+			wg.Done()
+		}()
 	}
+	wg.Wait()
 
 	// Test deleting items from memory store
 	for i := 0; i < len(key); i++ {
-		oldVal := value[i]
-		m.Remove(key[i])
-		v, err := m.Read(key[i])
-		if a.Error(err) {
-			a.NotEqual(oldVal, string(v))
-		}
+		wg.Add(1)
+		go func() {
+			oldVal := value[i]
+			m.Remove(key[i])
+			v, err := m.Read(key[i])
+			if err != nil {
+				if oldVal == string(v) {
+					t.Fail()
+					t.Logf("%s should not match %s", oldVal, string(v))
+				}
+			} else {
+				t.Fail()
+				t.Log("expected error but got nil")
+			}
+			wg.Done()
+		}()
 	}
+	wg.Wait()
 
 	// Test Trim method
 	k, _ := randString(16)

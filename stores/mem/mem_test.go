@@ -34,7 +34,7 @@ func TestMemStore(t *testing.T) {
 	a.NoError(c.Start())
 
 	// Make some random key-value strings to store
-	s := 10
+	s := 2000
 	key := make([]string, s)
 	value := make([]string, s)
 	for i := 0; i < len(key); i++ {
@@ -56,7 +56,7 @@ func TestMemStore(t *testing.T) {
 	for i := 0; i < len(key); i++ {
 		wg.Add(1)
 		go func() {
-			err = m.Write(key[i], []byte(value[i]), false)
+			err := m.Write(key[i], []byte(value[i]), false)
 			if err != nil {
 				t.Fail()
 				t.Log(err)

@@ -34,7 +34,7 @@ type (
 
 // New will initialize a new in-memory store
 // This is not persistent through reboots and should be used for short lived tasks.
-func New(s *Store) (*Store, error) {
+func New(s *Store) *Store {
 	// Set store type and make data map for writing
 	s.storeType = "mem"
 	s.data = new(sync.Map)
@@ -44,7 +44,7 @@ func New(s *Store) (*Store, error) {
 	if s.MaxAge == 0 {
 		s.MaxAge = cache.DefaultMaxAge
 	}
-	return s, nil
+	return s
 }
 
 // Type is the implementation from cache to get the store type

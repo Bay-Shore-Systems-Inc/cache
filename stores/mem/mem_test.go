@@ -16,10 +16,9 @@ import (
 func TestMemStore(t *testing.T) {
 	a := assert.New(t)
 
-	memStore, err := mem.New(&mem.Store{
+	memStore := mem.New(&mem.Store{
 		MaxAge: 4,
 	})
-	a.NoError(err)
 	a.NotNil(memStore)
 
 	// Create a New local cache
@@ -103,7 +102,7 @@ func TestMemStore(t *testing.T) {
 	v, _ := randString(16)
 	m.Write(k, []byte(v), true)
 	time.Sleep(time.Second * 6)
-	_, err = m.Read(k)
+	_, err := m.Read(k)
 	a.Error(err)
 
 	a.NoError(cache.StopCacheInstance(c.CacheNum))

@@ -22,11 +22,11 @@ type (
 		TrimTime time.Duration
 
 		// w adds the Workers struct to the current cache instance
-		w Workers
+		w workers
 	}
 
 	// Workers are used to control the trim() worker in the current cache
-	Workers struct {
+	workers struct {
 		// stop is an internal channel used to close the trim() worker when stopping the cache.
 		stop chan bool
 
@@ -40,7 +40,7 @@ var (
 	// defaultOpts sets the default options of the file cache.
 	defaultOpts = Options{
 		TrimTime: 900,
-		w: Workers{
+		w: workers{
 			stop: make(chan bool),
 			done: make(chan bool),
 		},

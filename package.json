@@ -1,0 +1,14 @@
+{
+    "name": "cache",
+    "version": "0.6.3",
+    "scripts": {
+        "prepare": "husky install",
+        "release": "node scripts/release.js"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^19.8.0",
+        "@commitlint/config-conventional": "^19.8.0",
+        "husky": "^8.0.0",
+        "standard-version": "^9.5.0"
+    }
+}

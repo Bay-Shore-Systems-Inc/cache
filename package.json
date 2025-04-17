@@ -2,7 +2,8 @@
     "name": "cache",
     "version": "0.6.4",
     "scripts": {
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "check": "go vet -v ./... && go test -v -cover ./... && gosec ./..."
     },
     "devDependencies": {
         "@commitlint/cli": "^19.8.0",

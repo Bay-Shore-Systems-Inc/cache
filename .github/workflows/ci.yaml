@@ -1,0 +1,51 @@
+# This CI Pipeline should be in all company repos
+# It will need to be changed to match the requirements
+# of your repo.
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  test:
+    # Use this if using Go to test more than one version
+    # if not change it to match the language and tests needed
+    name: Run Tests (Go ${{ matrix.go }}) and build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        go: [1.23, 1.24] # Change this to the go versions you want to test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      ###############################
+      ## Add any dependencies here ##
+      ###############################
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Vet code
+        run: go vet ./...
+
+      - name: Run tests with race detector
+        run: go test -v -race ./... | tee test-report.txt
+
+      - name: Upload test summary
+        if: always()
+        run: |
+          echo "## Test Output (Go ${{ matrix.go }})" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat test-report.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Build Package
+        run: go build ./...

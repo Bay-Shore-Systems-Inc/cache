@@ -1,80 +1,24 @@
-name: Create New Release
-
-# This is a manually triggered process to ensure releases
-# are created when ready.
+name: New Release PR Trigger
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Version tag (e.g. v1.2.3). Leave blank to use latest tag'
-        required: false
-      title:
-        description: 'Release title (optional)'
-        required: false
-      prerelease:
-        description: 'Make prerelease?'
-        required: false
-        default: 'false'
-      override_previous_release:
-        description: 'Allow overwriting of an existing release?'
-        required: false
-        default: 'false'
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
-  release:
+  release-pr:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch tags
-        run: git fetch --tags
-
-      - name: Determine tag to use
-        id: tag
-        run: |
-          TAG_INPUT="${{ github.event.inputs.tag }}"
-          if [ -z "$TAG_INPUT" ]; then
-            TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
-            echo "No tag input. Using latest: $TAG"
-          else
-            TAG="$TAG_INPUT"
-            echo "Using provided tag: $TAG"
-          fi
-          echo "tag=$TAG" >> $GITHUB_OUTPUT
-
-      - name: Fail if release already exists
-        id: check_release
-        run: |
-          TAG="${{ steps.tag.outputs.tag }}"
-          EXISTING=$(gh release view "$TAG" --json tagName --jq .tagName || true)
-          if [ "$EXISTING" = "$TAG" ] && [ "${{ github.event.inputs.override_previous_release }}" != "true" ]; then
-            echo "Release for tag '$TAG' already exists. Pass override_previous_release=true to force."
-            exit 1
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract changelog
-        id: changelog
-        run: |
-          echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
-          echo "# Changelog" >> $GITHUB_ENV
-          awk 'BEGIN { skip=1 }
-               /^### \[/ { if (found) exit; found=1; skip=0 }
-               skip { next }
-               { print }' CHANGELOG.md >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-      - name: Create release
-        uses: softprops/action-gh-release@v1
+      - name: Run release-please
+        uses: googleapis/release-please-action@v4
         with:
-          tag_name: ${{ steps.tag.outputs.tag }}
-          name: ${{ github.event.inputs.title || format('{0}', steps.tag.outputs.tag) }}
-          body: ${{ env.RELEASE_BODY }}
-          prerelease: ${{ github.event.inputs.prerelease }}
+          target-branch: main
+          config-file: .release-please-config.json
+          token: ${{ secrets.ACCESS_TOKEN }}

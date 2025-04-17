@@ -1,0 +1,19 @@
+{
+    "release-type": "node",
+    "default-branch": "main",
+    "changelog-path": "CHANGELOG.md",
+    "boostrap-sha": "a1cf8abae5d871edd69c9cb68ac83b601f16defc",
+    "include-component-in-tag": false,
+    "changelog-sections": [
+        { "type": "feat", "section": "🚀 Features" },
+        { "type": "fix", "section": "🐛 Bug Fixes" },
+        { "type": "docs", "section": "📝 Documentation" },
+        { "type": "style", "section": "🎨 Code Style" },
+        { "type": "refactor", "section": "🔨 Refactoring" },
+        { "type": "test", "section": "🧪 Tests" },
+        { "type": "chore", "section": "🧹 Maintenance" }
+    ],
+    "packages": {
+        ".": {}
+    }
+}

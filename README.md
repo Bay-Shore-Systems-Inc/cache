@@ -1,7 +1,7 @@
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/bay-shore-systems-inc/cache)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Bay-Shore-Systems-Inc/cache.svg)](https://pkg.go.dev/github.com/Bay-Shore-Systems-Inc/cache)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Bay-Shore-Systems-Inc/cache)](https://goreportcard.com/report/github.com/Bay-Shore-Systems-Inc/cache)
-[![Go](https://github.com/Bay-Shore-Systems-Inc/cache/actions/workflows/go.yml/badge.svg)](https://github.com/Bay-Shore-Systems-Inc/cache/actions/workflows/go.yml)
+[![CI Pipeline](https://github.com/Bay-Shore-Systems-Inc/cache/actions/workflows/ci.yaml/badge.svg)](https://github.com/Bay-Shore-Systems-Inc/cache/actions/workflows/ci.yaml)
 # Cache
 Cache is a simple dependency free cache package with the ability to add new storage methods by implementing a new store.
 

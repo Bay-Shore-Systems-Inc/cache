@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        go: [1.23, 1.24] # Change this to the go versions you want to test
+        go: [1.24, 1.25] # Change this to the go versions you want to test
 
     steps:
       - uses: actions/checkout@v4

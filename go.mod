@@ -1,6 +1,6 @@
 module github.com/Bay-Shore-Systems-Inc/cache
 
-go 1.23
+go 1.24
 
 require github.com/stretchr/testify v1.9.0
 

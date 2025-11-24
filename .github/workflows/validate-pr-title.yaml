@@ -1,4 +1,6 @@
 name: Validate PR Title
+permissions:
+  contents: read
 
 on:
   pull_request:

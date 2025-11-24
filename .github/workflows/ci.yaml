@@ -2,6 +2,8 @@
 # It will need to be changed to match the requirements
 # of your repo.
 name: CI Pipeline
+permissions:
+  contents: read
 
 on:
   push:

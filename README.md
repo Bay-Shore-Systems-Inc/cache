@@ -1,7 +1,7 @@
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/bay-shore-systems-inc/cache)
-[![Go Reference](https://pkg.go.dev/badge/github.com/Bay-Shore-Systems-Inc/cache.svg)](https://pkg.go.dev/github.com/Bay-Shore-Systems-Inc/cache)
-[![Go Report Card](https://goreportcard.com/badge/github.com/Bay-Shore-Systems-Inc/cache)](https://goreportcard.com/report/github.com/Bay-Shore-Systems-Inc/cache)
-[![CI Pipeline](https://github.com/Bay-Shore-Systems-Inc/cache/actions/workflows/ci.yaml/badge.svg)](https://github.com/Bay-Shore-Systems-Inc/cache/actions/workflows/ci.yaml)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/tmstorm/cache)
+[![Go Reference](https://pkg.go.dev/badge/github.com/tmstorm/cache.svg)](https://pkg.go.dev/github.com/tmstorm/cache)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tmstorm/cache)](https://goreportcard.com/report/github.com/tmstorm/cache)
+[![CI Pipeline](https://github.com/tmstorm/cache/actions/workflows/ci.yaml/badge.svg)](https://github.com/tmstorm/cache/actions/workflows/ci.yaml)
 # Cache
 Cache is a simple dependency free cache package with the ability to add new storage methods by implementing a new store.
 
@@ -20,7 +20,7 @@ This package supports the last 2 stable go versions.
 
 ## Install
 ```
-$ go get github.com/bay-shore-systems-inc/cache
+$ go get github.com/tmstorm/cache
 ```
 ## Stores
 * Mem  (In-memory)
@@ -31,7 +31,7 @@ Select and initiate each store you want to run in the cache.
 > [!NOTE]
 > The Options for each store will vary depending on the store.
 ```go
-import "github.com/bay-shore-systems-inc/stores/mem"
+import "github.com/tmstorm/stores/mem"
 
 func main() {
   ...
@@ -48,8 +48,7 @@ func main() {
 Initialize a new cache.
 ```go
 import (
-  "github.com/bay-shore-systems-inc/mem"
-  "github.com/bay-shore-systems-inc/stores/mem"
+  "github.com/tmstorm/cache"
 )
 func main() {
   ...
@@ -63,11 +62,6 @@ func main() {
 
 Start the cache.
 ```go
-import (
-  "log"
-  "github.com/bay-shore-systems-inc/mem"
-  "github.com/bay-shore-systems-inc/stores/mem"
-)
 func main() {
   ...
   err := c.Start()

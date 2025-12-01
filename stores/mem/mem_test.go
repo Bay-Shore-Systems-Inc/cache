@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Bay-Shore-Systems-Inc/cache"
-	"github.com/Bay-Shore-Systems-Inc/cache/stores/mem"
 	"github.com/stretchr/testify/assert"
+	"github.com/tmstorm/cache"
+	"github.com/tmstorm/cache/stores/mem"
 )
 
 // TestMemStore tests the in-memory storage

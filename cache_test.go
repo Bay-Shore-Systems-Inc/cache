@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Bay-Shore-Systems-Inc/cache"
-	"github.com/Bay-Shore-Systems-Inc/cache/stores/sham"
 	"github.com/stretchr/testify/assert"
+	"github.com/tmstorm/cache"
+	"github.com/tmstorm/cache/stores/sham"
 )
 
 // Test trimming and purging

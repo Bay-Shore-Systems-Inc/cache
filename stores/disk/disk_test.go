@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/Bay-Shore-Systems-Inc/cache"
-	"github.com/Bay-Shore-Systems-Inc/cache/stores/disk"
 	"github.com/stretchr/testify/assert"
+	"github.com/tmstorm/cache"
+	"github.com/tmstorm/cache/stores/disk"
 )
 
 type User struct {

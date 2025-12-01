@@ -1,4 +1,4 @@
-module github.com/Bay-Shore-Systems-Inc/cache
+module github.com/tmstorm/cache
 
 go 1.24
 

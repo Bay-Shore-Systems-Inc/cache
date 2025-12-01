@@ -5,10 +5,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Bay-Shore-Systems-Inc/cache"
+	"github.com/tmstorm/cache"
 )
 
-// Test implementation of the store interface
+// Store test implementation of the store interface
 type Store struct {
 	storeType string
 	mtx       sync.RWMutex

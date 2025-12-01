@@ -1,6 +1,6 @@
 {
     "name": "cache",
-    "version": "0.6.5",
+    "version": "0.6.6",
     "scripts": {
         "prepare": "husky install",
         "check": "go vet -v ./... && go test -v -cover ./... && gosec ./..."

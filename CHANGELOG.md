@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.6.6](https://github.com/tmstorm/cache/compare/v0.6.5...v0.6.6) (2025-12-01)
+
+
+### 🧹 Maintenance
+
+* change repo refs ([65368f3](https://github.com/tmstorm/cache/commit/65368f3eb947fc8782bc34760bd8c844eb183a17))
+* **ci:** workflow does not contain permissions ([#10](https://github.com/tmstorm/cache/issues/10)) ([89d767b](https://github.com/tmstorm/cache/commit/89d767bb81472ee39b6babf7eb8ef5f2993997ad))
+* **ci:** workflow does not contain permissions ([#9](https://github.com/tmstorm/cache/issues/9)) ([67a3e30](https://github.com/tmstorm/cache/commit/67a3e300d5250d25429367fc12eedeb91feb3868))
+* **deps-dev:** bump js-yaml from 4.1.0 to 4.1.1 ([#7](https://github.com/tmstorm/cache/issues/7)) ([11abef2](https://github.com/tmstorm/cache/commit/11abef28d8fb84ee339d416521841bf9b0f9abf6))
+
 ## [0.6.5](https://github.com/tmstorm/cache/compare/v0.6.4...v0.6.5) (2025-10-23)
 
 

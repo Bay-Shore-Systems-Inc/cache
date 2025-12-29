@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.7](https://github.com/tmstorm/cache/compare/v0.6.6...v0.6.7) (2025-12-29)
+
+
+### 🧹 Maintenance
+
+* provide key in mem store error ([a09d658](https://github.com/tmstorm/cache/commit/a09d658111c6eea966ab5d355fc0a7d9519962e9))
+
 ## [0.6.6](https://github.com/tmstorm/cache/compare/v0.6.5...v0.6.6) (2025-12-01)
 
 

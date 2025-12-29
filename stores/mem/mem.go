@@ -1,7 +1,7 @@
 package mem
 
 import (
-	"errors"
+	"fmt"
 	"log"
 	"sync"
 	"time"
@@ -52,7 +52,7 @@ func (s *Store) Type() string {
 	return s.storeType
 }
 
-// Mem is used to retrieve the in-memory store created at startup
+// Get is used to retrieve the in-memory store created at startup
 func Get(s *Store) *writer {
 	var w writer
 	w.Store = s
@@ -68,7 +68,7 @@ func (w *writer) Write(key string, value []byte, overwrite bool) error {
 			timeStamp: time.Now(),
 		})
 		if ok {
-			err := errors.New("key already exists in memory store")
+			err := fmt.Errorf("key already exists in memory store: %s", key)
 			return err
 		}
 	} else {
@@ -84,7 +84,7 @@ func (w *writer) Write(key string, value []byte, overwrite bool) error {
 func (w *writer) Read(key string) ([]byte, error) {
 	value, ok := w.Store.data.Load(key)
 	if !ok {
-		err := errors.New("key not found in memory store")
+		err := fmt.Errorf("key not found in memory store: %s", key)
 		return []byte{}, err
 	}
 	return value.(*valueStore).value, nil
@@ -96,7 +96,7 @@ func (w *writer) Remove(key string) error {
 	w.Store.data.Delete(key)
 	_, ok := w.Store.data.Load(key)
 	if ok {
-		return errors.New("key was not removed")
+		return fmt.Errorf("key was not removed: %s", key)
 	}
 	return nil
 }

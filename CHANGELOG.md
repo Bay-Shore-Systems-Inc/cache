@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.8](https://github.com/tmstorm/cache/compare/v0.6.7...v0.6.8) (2026-07-01)
+
+
+### 🧹 Maintenance
+
+* **deps-dev:** bump fast-uri from 3.0.6 to 3.1.2 ([#12](https://github.com/tmstorm/cache/issues/12)) ([d6109eb](https://github.com/tmstorm/cache/commit/d6109ebb9dd2c7ab92c9024566037d592528890d))
+* **deps-dev:** bump js-yaml from 4.1.1 to 4.3.0 ([#14](https://github.com/tmstorm/cache/issues/14)) ([316959a](https://github.com/tmstorm/cache/commit/316959abcb1ace2187c40f84ba6a15506677579b))
+
 ## [0.6.7](https://github.com/tmstorm/cache/compare/v0.6.6...v0.6.7) (2025-12-29)
 
 
